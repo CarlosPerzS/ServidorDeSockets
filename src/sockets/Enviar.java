@@ -10,6 +10,7 @@ import java.net.Socket;
 /**
  *
  * @author Carlos
+ * Clase para establecer conexiones y enviar mensaje a cada cliente
  */
 public class Enviar implements Runnable{
     public Socket[] conexiones;

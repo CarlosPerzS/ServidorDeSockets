@@ -3,24 +3,24 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package sockets;
-import sockets.*;
+import java.util.Vector;
 
 /**
  *
  * @author Carlos
+ * Clase para manejar el envio de mensajes a los clientes
  */
 public class ManejadorHilos implements Runnable{
     @Override
     public void run(){
-        while (true){
-            if(!Sockets.hilos.isEmpty()){
-                try {
-                    Thread hilo = Sockets.hilos.remove(0);
-                    hilo.start();
-                    hilo.join();
-                } catch (InterruptedException ex) {
-                    System.getLogger(ManejadorHilos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-                }
+        //Enviamos mensaje para cada miembro que no sea el primero
+        for (int i=1; i<Sockets.hilos.size(); i++){
+            Thread hilo = Sockets.hilos.elementAt(i);
+            hilo.start();
+            try {
+                hilo.join();
+            } catch (InterruptedException ex) {
+                System.getLogger(ManejadorHilos.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
             }
         }
     }
