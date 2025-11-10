@@ -4,7 +4,6 @@
  */
 package sockets;
 import java.io.IOException;
-import sockets.*;
 import java.net.Socket;
 
 /**
@@ -12,11 +11,11 @@ import java.net.Socket;
  * @author Carlos
  * Clase para establecer conexiones y enviar mensaje a cada cliente
  */
-public class Enviar implements Runnable{
+public class Recibir implements Runnable{
     public Socket[] conexiones;
     public int x;
 
-    Enviar(Socket[] conexiones, int n) {
+    Recibir(Socket[] conexiones, int n) {
         this.x = n;
         this.conexiones = conexiones;
     }
@@ -27,15 +26,8 @@ public class Enviar implements Runnable{
             //envio
             System.out.println("Le estamos enviando el mensaje a: " + conexiones[x].getInetAddress());
             conexiones[x].getOutputStream().write(Sockets.msg.getBytes());
-            //recepcion
-            if(x < conexiones.length){ 
-                byte[] buffer = new byte[1024];
-                int tamano = conexiones[x].getInputStream().read(buffer);
-                Sockets.msg = new String(buffer, 0, tamano);
-                System.out.println("Recibiendo: " + Sockets.msg + " - " + conexiones[x].getInetAddress());
-            }
         } catch (IOException ex) {
-            System.getLogger(Enviar.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(Recibir.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
 }

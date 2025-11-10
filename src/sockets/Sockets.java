@@ -36,19 +36,20 @@ public class Sockets {
                 //Si es el cliente 1, iniciamos el hilo especial de su conexion
                 if (n==0){
                     Mensajero ClienteOrigen = new Mensajero(conexion);
-                    Thread enviarMensajes;
-                    enviarMensajes = new Thread(ClienteOrigen);
+                    Thread enviarMensajes = new Thread(ClienteOrigen);
                     enviarMensajes.start();
                 }
-                
-                //Esta parte es cuando se hace el hilo para un cliente
-                Enviar c1;
-                c1 = new Enviar(conexiones, n);
-                Thread t;
-                t = new Thread(c1);
-                hilos.add(t);
-                n++;
+                //Si es otro cliente mas
+                else{
+                    //Esta parte es cuando se hace el hilo para un cliente
+                    Recibir c1;
+                    c1 = new Recibir(conexiones, n);
+                    Thread t = new Thread(c1);
+                    hilos.add(t);
+                    n++;
+                }
             }
+            
         } catch (IOException ex) {
             System.getLogger(Sockets.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }

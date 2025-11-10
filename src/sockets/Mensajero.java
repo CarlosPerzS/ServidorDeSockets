@@ -24,7 +24,7 @@ public class Mensajero implements Runnable{
             while(true){
                 //envio
                 System.out.println("Nuestro cliente 1 es:: " + cliente1.getInetAddress());
-                cliente1.getOutputStream().write("Envie un mensaje: ".getBytes());
+                cliente1.getOutputStream().write("Envie un mensaje, cliente 1: ".getBytes());
                 //recepcion
                 byte[] buffer = new byte[1024];
                 int tamano = cliente1.getInputStream().read(buffer);
@@ -42,7 +42,7 @@ public class Mensajero implements Runnable{
                 }
             }
         } catch (IOException ex) {
-            System.getLogger(Enviar.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
+            System.getLogger(Recibir.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
         }
     }
 }
