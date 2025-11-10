@@ -5,6 +5,7 @@
 package sockets;
 import java.io.IOException;
 import java.net.Socket;
+import java.net.SocketException;
 
 /**
  *
@@ -12,22 +13,22 @@ import java.net.Socket;
  * Clase para establecer conexiones y enviar mensaje a cada cliente
  */
 public class Recibir implements Runnable{
-    public Socket[] conexiones;
-    public int x;
+    public Socket conexion;
 
-    Recibir(Socket[] conexiones, int n) {
-        this.x = n;
-        this.conexiones = conexiones;
+    Recibir(Socket conexion) {
+        this.conexion = conexion;
     }
     
     @Override
     public void run(){
         try {
             //envio
-            System.out.println("Le estamos enviando el mensaje a: " + conexiones[x].getInetAddress());
-            conexiones[x].getOutputStream().write(Sockets.msg.getBytes());
-        } catch (IOException ex) {
+            System.out.println("Le estamos enviando el mensaje a: " + conexion.getInetAddress());
+            conexion.getOutputStream().write(Sockets.msg.getBytes());
+        } catch (SocketException exe){
+            System.out.println("Se desconecto: " + conexion.getInetAddress());
+        }catch (IOException ex) {
             System.getLogger(Recibir.class.getName()).log(System.Logger.Level.ERROR, (String) null, ex);
-        }
+        } 
     }
 }

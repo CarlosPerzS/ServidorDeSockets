@@ -16,7 +16,7 @@ import java.util.Vector;
  */
 public class Sockets {
     public static String msg = "Envie un texto...";
-    public static Vector<Thread> hilos = new Vector<>();
+    public static Vector<Socket>sockets  = new Vector<>();
     
     public static void main(String[] args) {
         try {
@@ -42,12 +42,9 @@ public class Sockets {
                 //Si es otro cliente mas
                 else{
                     //Esta parte es cuando se hace el hilo para un cliente
-                    Recibir c1;
-                    c1 = new Recibir(conexiones, n);
-                    Thread t = new Thread(c1);
-                    hilos.add(t);
-                    n++;
+                    sockets.add(conexion);
                 }
+                n++;
             }
             
         } catch (IOException ex) {
